@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <project xmlns="http://maven.apache.org/POM/4.0.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+
+        <!-- 1. Identificação do seu Projeto -->
+        <groupId>br.ufrpe.uabj</groupId>
+        <artifactId>poker-eng-software</artifactId>
+        <version>1.0.0</version>
+
+        <!-- 2. Propriedades: Java 17 e Codificação UTF-8 -->
+        <properties>
+            <maven.compiler.source>17</maven.compiler.source>
+            <maven.compiler.target>17</maven.compiler.target>
+            <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        </properties>
+
+        <!-- 3. Dependências Externas -->
+        <dependencies>
+            <!-- Javalin (Microframework Web) -->
+            <dependency>
+                <groupId>io.javalin</groupId>
+                <artifactId>javalin</artifactId>
+                <version>6.3.0</version>
+            </dependency>
+
+            <!-- Jackson (transformar Objetos Java em JSON automaticamente) -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.17.2</version>
+            </dependency>
+
+            <!-- Logger (Para o Javalin mostrar logs amigáveis no terminal quando subir) -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>2.0.13</version>
+            </dependency>
+        </dependencies>
+    </project>
