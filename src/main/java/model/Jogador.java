@@ -2,6 +2,8 @@ package model;
 
 import java.util.UUID; // gera um identificador único para cada jogador
 
+
+// #CLASSE JOGADOR
 public class Jogador {
     private String id;
     private String nome;
