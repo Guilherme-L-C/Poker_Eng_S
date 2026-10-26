@@ -15,6 +15,7 @@ public class Partida {
     private List<Jogador> jogadores;
     private int maxJogadores;
     private String status;
+    private Baralho baralho;
 
     // construtor padrao
     public Partida() {
@@ -62,7 +63,16 @@ public class Partida {
 
     // rotina da US13 acionada ao iniciar
     public void distribuirCartas() {
-        // ponto de integracao para US13
+        this.baralho = new Baralho();
+        this.baralho.embaralhar();
+
+        if (this.jogadores != null) {
+            for (Jogador jogador : this.jogadores) {
+                jogador.limparCartas();
+                jogador.receberCarta(this.baralho.distribuir());
+                jogador.receberCarta(this.baralho.distribuir());
+            }
+        }
     }
 
     public boolean isCriador(String idJogador) {
@@ -169,5 +179,13 @@ public class Partida {
             this.jogadores = new ArrayList<>();
         }
         this.jogadores.add(jogador);
+    }
+
+    public Baralho getBaralho() {
+        return baralho;
+    }
+
+    public void setBaralho(Baralho baralho) {
+        this.baralho = baralho;
     }
 }
