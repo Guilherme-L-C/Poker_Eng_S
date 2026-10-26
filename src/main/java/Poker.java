@@ -49,7 +49,7 @@ public class Poker {
         app.post("/poker/{idPartida}/iniciar", ctx -> {
             String idPartida = ctx.pathParam("idPartida");
 
-            // Identificação do jogador responsável: pode vir via parâmetro de consulta (?idJogador=...) ou corpo JSON
+            // Identificação do jogador responsável: pode vir via query parameter (?idJogador=...) ou corpo JSON
             String idJogador = ctx.queryParam("idJogador");
             if (idJogador == null || idJogador.trim().isEmpty()) {
                 try {
@@ -68,7 +68,7 @@ public class Poker {
                 return;
             }
 
-            // 1. Verifica se a partida existe
+            // 1. Verifica se a partida existe (404)
             Partida partida = null;
             for (Partida p : partidas) {
                 if (p.getId().equals(idPartida)) {
@@ -84,37 +84,27 @@ public class Poker {
                 return;
             }
 
-            // 2. Verifica se a partida já foi iniciada
-            if (partida.isIniciada()) {
-                HashMap<String, String> erro = new HashMap<>();
-                erro.put("erro", "A partida já foi iniciada.");
-                ctx.status(400).json(erro);
-                return;
-            }
+            // Executa as validações de domínio da entidade Partida
+            try {
+                partida.iniciar(idJogador);
 
-            // 3. Verifica se o jogador responsável possui autorização para iniciá-la
-            if (!idJogador.equals(partida.getIdCriador())) {
+                // Resposta de sucesso conforme US12.md (200 OK)
+                HashMap<String, Object> resposta = new HashMap<>();
+                resposta.put("mensagem", "Partida iniciada com sucesso.");
+                resposta.put("idPartida", partida.getId());
+                resposta.put("status", partida.getStatus());
+                ctx.status(200).json(resposta);
+            } catch (SecurityException e) {
+                // 403 Forbidden - solicitante não é o criador da partida
                 HashMap<String, String> erro = new HashMap<>();
-                erro.put("erro", "Apenas o jogador responsável pela mesa pode iniciar a partida.");
+                erro.put("erro", e.getMessage());
                 ctx.status(403).json(erro);
-                return;
-            }
-
-            // 4. Verifica se há participantes suficientes para iniciar o jogo (mínimo de 2 participantes)
-            if (partida.getJogadores() == null || partida.getJogadores().size() < 2) {
+            } catch (IllegalStateException | IllegalArgumentException e) {
+                // 400 Bad Request - partida já iniciada ou jogadores insuficientes
                 HashMap<String, String> erro = new HashMap<>();
-                erro.put("erro", "Número insuficiente de jogadores para iniciar a partida (mínimo de 2 participantes).");
+                erro.put("erro", e.getMessage());
                 ctx.status(400).json(erro);
-                return;
             }
-
-            // Inicia a partida com sucesso
-            partida.setIniciada(true);
-
-            HashMap<String, Object> resposta = new HashMap<>();
-            resposta.put("status", "Partida iniciada com sucesso.");
-            resposta.put("idPartida", partida.getId());
-            ctx.status(200).json(resposta);
         });
     }
 }
