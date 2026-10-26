@@ -69,16 +69,22 @@ public class Partida {
         return this.jogadores != null && this.jogadores.size() >= 2;
     }
 
-    // Método de entrada de jogador (auxiliar para US10)
+    // Método de entrada de jogador (US10)
     public void entrar(Jogador jogador) {
+        if (jogador == null) {
+            throw new IllegalArgumentException("Jogador não pode ser nulo.");
+        }
         if (isEmAndamentoOuFinalizada()) {
             throw new IllegalStateException("A partida já foi iniciada.");
+        }
+        if (this.jogadores == null) {
+            this.jogadores = new ArrayList<>();
         }
         if (this.jogadores.size() >= this.maxJogadores) {
             throw new IllegalStateException("A mesa atingiu o limite máximo de participantes.");
         }
         for (Jogador j : this.jogadores) {
-            if (j.getId().equals(jogador.getId())) {
+            if (j.getId() != null && j.getId().equals(jogador.getId())) {
                 throw new IllegalArgumentException("Jogador já está presente na mesa.");
             }
         }
