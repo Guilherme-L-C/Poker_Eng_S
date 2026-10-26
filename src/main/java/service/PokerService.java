@@ -51,8 +51,9 @@ public class PokerService {
 
     // busca jogador por id
     public Jogador buscarJogadorPorId(String id) {
+        if (id == null) return null;
         for (Jogador j : jogadores) {
-            if (j.getId().equals(id)) {
+            if (j.getId() != null && j.getId().equals(id)) {
                 return j;
             }
         }
@@ -61,8 +62,9 @@ public class PokerService {
 
     // busca partida por id
     public Partida buscarPartidaPorId(String id) {
+        if (id == null) return null;
         for (Partida p : partidas) {
-            if (p.getId().equals(id)) {
+            if (p.getId() != null && p.getId().equals(id)) {
                 return p;
             }
         }

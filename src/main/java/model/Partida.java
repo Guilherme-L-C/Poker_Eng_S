@@ -77,11 +77,7 @@ public class Partida {
         return this.jogadores != null && this.jogadores.size() >= 2;
     }
 
-<<<<<<< HEAD
     // Método de entrada de jogador (US10)
-=======
-    // entrada de jogador (auxiliar para US10)
->>>>>>> 4abbb92049bf83659a4800037d267e8c7046f9f8
     public void entrar(Jogador jogador) {
         if (jogador == null) {
             throw new IllegalArgumentException("Jogador não pode ser nulo.");
