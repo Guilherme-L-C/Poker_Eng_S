@@ -1,26 +1,13 @@
+import controller.PokerController;
 import io.javalin.Javalin;
-import model.Jogador;
-import model.Partida;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import service.PokerService;
 
 public class Poker {
-    private static List<Jogador> jogadores = new ArrayList<>();
-    private static List<Partida> partidas = new ArrayList<>();
-
-    public static List<Jogador> getJogadores() {
-        return jogadores;
-    }
-
-    public static List<Partida> getPartidas() {
-        return partidas;
-    }
-
     public static void main(String[] args) {
-        var app = Javalin.create().start(7070); // inicia o servidor na porta 7070
+        // inicia o servidor na porta 7070
+        var app = Javalin.create().start(7070);
 
+<<<<<<< HEAD
         // US01 - Cadastro de jogadores
         app.post("/poker/cadastro", ctx -> { // caminho do endpoint
             Jogador dados = ctx.bodyAsClass(Jogador.class);
@@ -179,5 +166,10 @@ public class Poker {
                 ctx.status(400).json(erro);
             }
         });
+=======
+        // instancia servico e rotas
+        PokerService service = new PokerService();
+        new PokerController(app, service);
+>>>>>>> 4abbb92049bf83659a4800037d267e8c7046f9f8
     }
 }
